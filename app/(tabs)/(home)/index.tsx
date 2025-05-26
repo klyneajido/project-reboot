@@ -14,7 +14,7 @@ export default function Home() {
   return (
     <View className="container">
       {tasks.map(task =>
-        <View className="flex justify-center">
+        <View className="flex justify-center ">
           <TodoItem
           key={task.id}
           task={task}

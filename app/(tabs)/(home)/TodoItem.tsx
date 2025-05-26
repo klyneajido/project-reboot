@@ -4,7 +4,7 @@ import { Text, View } from "react-native";
 
 export default function TodoItem({task, toggleCompleted}) {
     return (
-        <View>
+        <View className="flex flex-row items-center  bg-gray-200 space-x-2 mx-3 my-1 p-2 rounded-md">
             <CheckBox
                 value={task.completed}
                 onValueChange={() => toggleCompleted(task.id)}
