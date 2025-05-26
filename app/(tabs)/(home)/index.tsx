@@ -12,13 +12,15 @@ export default function Home() {
     setTasks(tasks.map(task => (task.id === id ? { ...task, completed: !task.completed } : task)))
   }
   return (
-    <View>
+    <View className="container">
       {tasks.map(task =>
-        <TodoItem
+        <View className="flex justify-center">
+          <TodoItem
           key={task.id}
           task={task}
           toggleCompleted={toggleCompleted}
         />
+        </View>
       )}
     </View>
   );
