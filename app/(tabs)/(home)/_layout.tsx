@@ -13,7 +13,8 @@ export default function HomeLayout() {
         },
       }}>
       <Stack.Screen name="index" />
-      <Stack.Screen name="TodoItem" />
+      <Stack.Screen name="AMTodoItem" />
+      <Stack.Screen name="PMTodoItem" />
     </Stack>
   );
 }
