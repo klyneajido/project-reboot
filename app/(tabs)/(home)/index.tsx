@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Text, View } from "react-native";
+import { useEffect, useState } from "react";
+import { ScrollView, Text, View } from "react-native";
 import AMTodoItem from "./AMTodoItem";
 import GeneralTodoItem from "./GeneralTodoItem";
 import PMTodoItem from "./PMTodoItem";
@@ -26,6 +26,15 @@ export default function Home() {
     { id: 13, text: "Sleep by 12:00 PM", completed: false }
   ])
 
+  const [currentDate, setCurrentDate] = useState(new Date());
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentDate(new Date());
+    }, 1000)
+    return () => clearInterval(interval)
+  }, []);
+
   function AMToggleCompleted(id) {
     setAMTasks(AMtasks.map(task => (task.id === id ? { ...task, completed: !task.completed } : task)))
   }
@@ -39,10 +48,14 @@ export default function Home() {
   }
 
   return (
-    <View className="container">
+    <ScrollView className="container">
+      <View className="header px-3 pt-5">
+        <Text className="text-lg">Welcome to Project Reboot</Text>
+        <Text className="text-md"> {currentDate.toDateString()}</Text>
+      </View>
       {/* GENERAL TASKS */}
-      <View className="px-3">
-        <Text>GENERAL TASKS</Text>
+      <View className="px-3 pt-5">
+        <Text className="text-md">GENERAL TASKS</Text>
         {generalTasks.map(task =>
           <View key={task.id} className="flex justify-center ">
             <GeneralTodoItem
@@ -54,8 +67,8 @@ export default function Home() {
       </View>
 
       {/* AM TASKS */}
-      <View className="px-3">
-        <Text>AM TASKS</Text>
+      <View className="px-3 pt-5">
+        <Text className="text-md">AM TASKS</Text>
         {AMtasks.map(task =>
           <View key={task.id} className="flex justify-center ">
             <AMTodoItem
@@ -67,8 +80,8 @@ export default function Home() {
       </View>
 
       {/* PM TASKS */}
-      <View className="px-3">
-        <Text>PM TASKS</Text>
+      <View className="px-3 pt-5">
+        <Text className="text-md">PM TASKS</Text>
         {PMtasks.map(task =>
           <View key={task.id} className="flex justify-center ">
             <PMTodoItem
@@ -78,7 +91,7 @@ export default function Home() {
           </View>
         )}
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
