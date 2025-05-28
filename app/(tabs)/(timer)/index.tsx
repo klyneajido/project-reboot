@@ -27,10 +27,15 @@ const handleStart = () => {
     }, 1000);
 };
 
+const handleStop = () => {
+    console.log("Stop button clicked");
+    clearInterval(intervalRef.current);
+}
     return (
         <View className="container flex">
         {seconds}
         <Button title="Start" onPress={handleStart}/>
+        <Button title="Stop" onPress={handleStop}/>
         </View>
     );
 }
