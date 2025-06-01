@@ -7,8 +7,9 @@ export default function PMTodoItem({task,PMToggleCompleted}){
             <Checkbox
                 value={task.completed}
                 onValueChange={() => PMToggleCompleted(task.id)}
+                className="mr-3"
             />
-            <Text style={{textDecorationLine: task.completed ? 'line-through' : 'none'}}>
+            <Text className="font-exo" style={{textDecorationLine: task.completed ? 'line-through' : 'none'}}>
                 {task.text}
             </Text>
         </View>

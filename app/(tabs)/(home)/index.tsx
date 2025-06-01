@@ -15,7 +15,7 @@ export default function Home() {
   const [AMtasks, setAMTasks] = useState([
     { id: 6, text: "Wake up by 6:00 AM", completed: false },
     { id: 7, text: "Do 100 Push-ups (or progress version)", completed: false },
-    { id: 8, text: "10–15 min Light Morning Exercise (walk/yoga/stretch)", completed: false },
+    { id: 8, text: "10–15 min Light Morning Exercise", completed: false },
     { id: 9, text: "5–10 Minute Meditation", completed: false },
     { id: 10, text: "Write 3 Things You're Grateful For", completed: false },
   ]);
@@ -48,50 +48,53 @@ export default function Home() {
   }
 
   return (
-    <ScrollView className="container">
-      <View className="header px-3 pt-5">
-        <Text className="text-2xl mt-20">Project Reboot</Text>
-        <Text className="text-md"> {currentDate.toDateString()}</Text>
+    <ScrollView className="h-full bg-background px-4 py-10">
+      <View className="mb-6">
+        <Text className="text-3xl font-exo font-semibold text-accent file:mt-20">Project Reboot</Text>
+        <Text className="text-sm font-exo font-semibold text-accent"> {currentDate.toDateString()}</Text>
       </View>
+
       {/* GENERAL TASKS */}
-      <View className="px-3 pt-5">
-        <Text className="text-md">GENERAL TASKS</Text>
-        {generalTasks.map(task =>
-          <View key={task.id} className="flex justify-center ">
-            <GeneralTodoItem
-              task={task}
-              generalToggleCompleted={generalToggleCompleted}
-            />
-          </View>
-        )}
-      </View>
+      <Section title="General Tasks">
+        {generalTasks.map((task) => (
+          <GeneralTodoItem
+            key={task.id}
+            task={task}
+            generalToggleCompleted={generalToggleCompleted} />
+        ))}
+      </Section>
 
       {/* AM TASKS */}
-      <View className="px-3 pt-5">
-        <Text className="text-md">AM TASKS</Text>
-        {AMtasks.map(task =>
-          <View key={task.id} className="flex justify-center ">
-            <AMTodoItem
-              task={task}
-              AMToggleCompleted={AMToggleCompleted}
-            />
-          </View>
-        )}
-      </View>
+      <Section title="AM Tasks">
+        {AMtasks.map((task) => (
+          <AMTodoItem
+            key={task.id}
+            task={task}
+            AMToggleCompleted={AMToggleCompleted} />
+        ))}
+      </Section>
 
-      {/* PM TASKS */}
-      <View className="px-3 pt-5">
-        <Text className="text-md">PM TASKS</Text>
-        {PMtasks.map(task =>
-          <View key={task.id} className="flex justify-center ">
-            <PMTodoItem
-              task={task}
-              PMToggleCompleted={PMToggleCompleted}
-            />
-          </View>
-        )}
-      </View>
+      <Section title="PM Tasks">
+        {PMtasks.map((task) => (
+          <PMTodoItem
+            key={task.id}
+            task={task}
+            PMToggleCompleted={PMToggleCompleted} />
+        ))}
+      </Section>
     </ScrollView>
   );
 }
 
+function Section({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <View className="mb-6 rounded-xl bg-surface px-4 py-3">
+      <Text className="text-accent font-semibold text-lg font-exo uppercase mb-3">
+        {title}
+      </Text>
+      <View className="space-y-2">
+        {children}
+      </View>
+    </View>
+  );
+}

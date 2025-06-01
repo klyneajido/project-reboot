@@ -8,8 +8,9 @@ export default function AMTodoItem({task, AMToggleCompleted}) {
             <CheckBox
                 value={task.completed}
                 onValueChange={() => AMToggleCompleted(task.id)}
+                className="mr-3"
             />
-            <Text style={{ textDecorationLine: task.completed ? 'line-through' : 'none' }}>
+            <Text className="font-exo" style={{ textDecorationLine: task.completed ? 'line-through' : 'none' }}>
                 {task.text}
             </Text>
         </View>

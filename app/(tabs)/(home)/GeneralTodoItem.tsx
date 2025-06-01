@@ -7,8 +7,9 @@ export default function GeneralTodoItem({task, generalToggleCompleted}){
             <Checkbox
             value={task.completed}
             onValueChange={() => generalToggleCompleted(task.id)}
+            className="mr-3"
             />
-            <Text style={{textDecorationLine: task.completed ? 'line-through' : 'none'}}>{task.text}</Text>
+            <Text className="font-exo" style={{textDecorationLine: task.completed ? 'line-through' : 'none'}}>{task.text}</Text>
         </View>
     );
 }
