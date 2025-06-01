@@ -50,7 +50,7 @@ export default function Home() {
   return (
     <ScrollView className="container">
       <View className="header px-3 pt-5">
-        <Text className="text-lg">Welcome to Project Reboot</Text>
+        <Text className="text-2xl mt-20">Project Reboot</Text>
         <Text className="text-md"> {currentDate.toDateString()}</Text>
       </View>
       {/* GENERAL TASKS */}
