@@ -88,7 +88,7 @@ import PMTodoItem from "./PMTodoItem";
       </SafeAreaView>
     );
   }
-
+  
   function Section({ title, children }: { title: string; children: React.ReactNode }) {
     return (
       <View className="mb-6 rounded-xl bg-surface px-4 py-3">
