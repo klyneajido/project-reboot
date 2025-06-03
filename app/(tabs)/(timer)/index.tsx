@@ -73,8 +73,9 @@ export default function Timer() {
                 ))}
             </View>
             <Text className="font-exo font-semibold text-2xl text-center mt-10">{selectedTask}</Text>
-            <View className=" h-full flex items-center justify-center">
-                <View className="container bg-background rounded-md w-80 h-11/12 flex justify-center items-center">
+            
+            <View className=" h-full flex mt-5">
+                <View className="container bg-background rounded-md w-80 h-11/12 flex justify-center items-center shadow-black shadow-md">
                     <View className=" rounded-md bg-muted py-10 w-72 mt-3">
                         <Text className="font-exo text-5xl text-center">{formatTime(seconds)}</Text>
                     </View>

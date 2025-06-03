@@ -22,6 +22,14 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => <AntDesign name="clockcircle" size={28} color={color} />
         }}
       />
+      <Tabs.Screen
+        name="(calendar)"
+        options={{
+          title: 'Calendar',
+          headerShown: false,
+          tabBarIcon: ({ color }) => <AntDesign name="calendar" size={28} color={color} />
+        }}
+      />
 
     </Tabs>
   );
