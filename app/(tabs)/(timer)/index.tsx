@@ -64,8 +64,9 @@ export default function Timer() {
         intervalRef.current = 0
     }
     return (
-        <View className="container h-full flex items-center mt-5">
-            <View className="flex flex-row space-x-1">
+        <View className="flex-1 justify-center items-center">
+
+            <View className="flex flex-row gap-x-2">
                 {Object.keys(TASKS).map((task) => (
                     <TouchableOpacity className="bg-surface p-3 rounded-md" key={task} onPress={() => handleTaskChange(task)}>
                         <Text className="font-exo text-white">{task}</Text>
@@ -74,8 +75,8 @@ export default function Timer() {
             </View>
             <Text className="font-exo font-semibold text-2xl text-center mt-10">{selectedTask}</Text>
             
-            <View className=" h-full flex mt-5">
-                <View className="container bg-background rounded-md w-80 h-11/12 flex justify-center items-center shadow-black shadow-md">
+            <View className=" flex mt-5">
+                <View className="container bg-background rounded-md w-80 flex justify-center items-center shadow-black shadow-md">
                     <View className=" rounded-md bg-muted py-10 w-72 mt-3">
                         <Text className="font-exo text-5xl text-center">{formatTime(seconds)}</Text>
                     </View>

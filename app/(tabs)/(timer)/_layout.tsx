@@ -1,9 +1,12 @@
 import { Stack } from "expo-router";
+import { View } from "react-native";
 
 export default function TimerLayout(){
   return(
-    <Stack screenOptions={{headerShown:false}}>
+<View className="flex-1 h-full">
+      <Stack screenOptions={{headerShown:false}}>
         <Stack.Screen name="index"/>
     </Stack>
+</View>
   );   
 }
