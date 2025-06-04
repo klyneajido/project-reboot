@@ -16,7 +16,8 @@
         "foregroundImage": "./assets/images/project-reboot.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.anonymous.projectreboot"
     },
     "web": {
       "bundler": "metro",
@@ -38,6 +39,12 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "e509cb91-0c77-48b9-b527-fe814c6cb8e2"
+      }
     }
   }
 }
