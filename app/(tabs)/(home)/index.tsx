@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useState } from "react";
 import { SafeAreaView, ScrollView, Text, View } from "react-native";
 import TodoItem from "./TodoItem";
@@ -7,6 +8,18 @@ type Task = {
   text: string;
   completed: boolean;
   category: "am" | "pm" | "general";
+}
+
+async function saveDayCompleted(dateString: string) {
+  try {
+    const jsonValue = await AsyncStorage.getItem('@completedDays');
+    const completedDays = jsonValue ? JSON.parse(jsonValue) : {};
+    completedDays[dateString] = true;
+    await AsyncStorage.setItem('@completedDays', JSON.stringify(completedDays));
+  }
+  catch (e) {
+    console.log('error saving completed day: ', e)
+  }
 }
 
 export default function Home() {
@@ -25,8 +38,13 @@ export default function Home() {
     { id: 12, text: "Mindfulness / No Social Media after 11 PM", completed: false, category: "pm" },
     { id: 13, text: "Sleep by 12:00 PM", completed: false, category: "pm" }
   ])
-
   const [currentDate, setCurrentDate] = useState(new Date());
+  const categories: { key: string; title: string }[] = [
+    { key: "general", title: "General Tasks" },
+    { key: "am", title: "AM Tasks" },
+    { key: "pm", title: "PM Tasks" },
+  ];
+  const allCompleted = tasks.every(task => task.completed)
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -35,6 +53,15 @@ export default function Home() {
     return () => clearInterval(interval)
   }, []);
 
+  useEffect(()=>{
+    if(tasks.length === 0) return;
+    const allCompleted = tasks.every(task => task.completed);
+    if(allCompleted){
+      const today = new Date().toISOString().slice(0,10);
+      saveDayCompleted(today);
+    }
+  },[tasks]);
+
   function toggleCompleted(id: number) {
     setTasks((tasks) =>
       tasks.map((task) =>
@@ -42,11 +69,6 @@ export default function Home() {
       )
     )
   }
-  const categories: { key: string; title: string }[] = [
-    { key: "general", title: "General Tasks" },
-    { key: "am", title: "AM Tasks" },
-    { key: "pm", title: "PM Tasks" },
-  ]
 
   return (
     <SafeAreaView style={{ flex: 1 }} >

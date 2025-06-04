@@ -1,5 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useEffect, useState } from "react";
+import { useFocusEffect } from 'expo-router';
+import { useCallback, useState } from "react";
 import { View } from "react-native";
 import { Calendar } from 'react-native-calendars';
 
@@ -7,29 +8,30 @@ export default function Kalendaryo() {
   const [selected, setSelected] = useState('');
   const [markedDates, setMarkedDates] = useState({})
 
-  useEffect(() => {
-    async function loadCompletedDays() {
-      try {
-        const jsonValue = await AsyncStorage.getItem('@completedDays');
-        const completedDays = jsonValue ? JSON.parse(jsonValue) : {};
 
-        const marks = Object.fromEntries(
-          Object.keys(completedDays).map(date => [date, {marked:true, dotColor: 'green'}])
-        );
-        setMarkedDates(marks)
-      }
-      catch (e) {
-        console.error("Error in loading completed days: ", e)
-      }
+  const loadCompletedDays = async () => {
+    try {
+      const jsonValue = await AsyncStorage.getItem('@completedDays');
+      const completedDays = jsonValue ? JSON.parse(jsonValue) : {};
+
+      const marks = Object.fromEntries(
+        Object.keys(completedDays).map(date => [date, { marked: true, dotColor: 'green' }])
+      );
+      setMarkedDates(marks);
+    } catch (e) {
+      console.error("Error loading completed days: ", e);
     }
-    loadCompletedDays();
-
-  }, []);
-
+  };
+  useFocusEffect(
+    useCallback(() => {
+      loadCompletedDays();
+    }, [])
+  );
   // For clearing storage *dev mode
-  // function clearAsyncStorage(){
-  //   AsyncStorage.clear();
-  // }
+  function clearAsyncStorage() {
+    AsyncStorage.clear();
+    loadCompletedDays();
+  }
   return (
     <View className="flex-1 items-center justify-center bg-background px-5">
       <View className="rounded-2xl shadow-md overflow-hidden w-full">
@@ -53,8 +55,11 @@ export default function Kalendaryo() {
             textDayHeaderFontSize: 14,
           }}
         />
-        <View>
-        </View>
+      </View>
+      <View>
+        {/* <TouchableOpacity className='bg-accent py-2 px-3 rounded-md m-5' onPress={clearAsyncStorage}>
+          <Text>Clear</Text>
+        </TouchableOpacity> */}
       </View>
     </View>
   );

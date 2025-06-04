@@ -74,7 +74,7 @@ export default function Timer() {
             <View className="flex flex-row gap-x-2">
                 {Object.keys(TASKS).map((task) => (
                     <TouchableOpacity className={`px-3 py-2 rounded-md ${active === task ? 'border-muted border-2' : 'bg-surface'}`} key={task} onPress={() => handleTaskChange(task)}>
-                        <Text className={`font-exo ${active === task ? 'text-muted' : 'text-white'}`}>{task}</Text>
+                        <Text className={`font-exo ${active === task ? 'text-accent' : 'text-white'}`}>{task}</Text>
                     </TouchableOpacity>
                 ))}
             </View>
@@ -83,7 +83,7 @@ export default function Timer() {
             {/* Timer */}
             <View className=" flex mt-5">
                 <View className="container bg-surface rounded-md w-80 flex justify-center items-center shadow-black shadow-md">
-                    <View className=" rounded-md bg-muted py-10 w-72 mt-3">
+                    <View className=" rounded-md bg-accent py-10 w-72 mt-3">
                         <Text className="font-exo text-5xl text-center">{formatTime(seconds)}</Text>
                     </View>
                     <View className=" py-5 gap-x-2 flex-row items-center justify-center w-72">
