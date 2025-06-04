@@ -13,12 +13,16 @@ export default function Timer() {
     const [time, setTime] = useState(TASKS[selectedTask]);
     const [seconds, setSeconds] = useState(TASKS[selectedTask]);
     const intervalRef = useRef(0);
+    const [active, setActive] = useState<string | null>(null);
 
 
     function formatTime(seconds) {
-        const minutes = Math.floor(seconds / 60);
+        const hours = Math.floor(seconds / 3600);
+        const minutes = Math.floor((seconds % 3600) / 60);
         const remainingSecs = Math.floor(seconds % 60);
-        return (`${minutes}:${remainingSecs < 10 ? "0" : ""}${remainingSecs}`)
+
+
+        return hours > 0 ? (`${hours}:${minutes}:${remainingSecs < 10 ? "0" : ""}${remainingSecs}`) : (`${minutes}:${remainingSecs < 10 ? "0" : ""}${remainingSecs}`)
     }
 
     useEffect(() => {
@@ -55,7 +59,8 @@ export default function Timer() {
         intervalRef.current = 0;
     }
 
-    const handleTaskChange = (task: string) => {
+    const handleTaskChange = (task: string,) => {
+        setActive(task);
         setSelectedTask(task);
         const taskTime = TASKS[task];
         setTime(taskTime);
@@ -68,13 +73,13 @@ export default function Timer() {
 
             <View className="flex flex-row gap-x-2">
                 {Object.keys(TASKS).map((task) => (
-                    <TouchableOpacity className="bg-surface p-3 rounded-md" key={task} onPress={() => handleTaskChange(task)}>
-                        <Text className="font-exo text-white">{task}</Text>
+                    <TouchableOpacity className={`px-4 py-2 rounded-md ${active === task ? 'border-muted border-2' : 'bg-surface'}`} key={task} onPress={() => handleTaskChange(task)}>
+                        <Text className={`font-exo ${active === task ? 'text-background' : 'text-white'}`}>{task}</Text>
                     </TouchableOpacity>
                 ))}
             </View>
             <Text className="font-exo font-semibold text-2xl text-center mt-10">{selectedTask}</Text>
-            
+
             <View className=" flex mt-5">
                 <View className="container bg-background rounded-md w-80 flex justify-center items-center shadow-black shadow-md">
                     <View className=" rounded-md bg-muted py-10 w-72 mt-3">
