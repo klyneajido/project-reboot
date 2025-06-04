@@ -49,7 +49,7 @@ import PMTodoItem from "./PMTodoItem";
 
     return (
       <SafeAreaView style={{ flex: 1 }} >
-      <ScrollView className=" bg-background px-4 py-10 pb-56" contentContainerStyle={{ paddingBottom: 50 }}>
+      <ScrollView className=" bg-background px-7 py-10 pb-56" contentContainerStyle={{ paddingBottom: 50 }}>
         <View className="mb-6">
           <Text className="text-3xl font-exo font-semibold text-accent file:mt-20">Project Reboot</Text>
           <Text className="text-sm font-exo font-semibold text-accent"> {currentDate.toDateString()}</Text>
