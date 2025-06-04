@@ -9,6 +9,7 @@ export default function AMTodoItem({task, AMToggleCompleted}) {
                 value={task.completed}
                 onValueChange={() => AMToggleCompleted(task.id)}
                 className="mr-3"
+                color={task.completed ? '#2b2d42' : undefined}
             />
             <Text className="font-exo flex-shrink text-wrap" style={{ textDecorationLine: task.completed ? 'line-through' : 'none' }}>
                 {task.text}
