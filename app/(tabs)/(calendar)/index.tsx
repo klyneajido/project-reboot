@@ -6,8 +6,8 @@ export default function Kalendaryo() {
   const [selected, setSelected] = useState('');
 
   return (
-    <View className="flex-1 items-center justify-center bg-background p-4">
-      <View className="rounded-2xl shadow-md overflow-hidden w-full max-w-[360px]">
+    <View className="flex-1 items-center justify-center bg-background px-5">
+      <View className="rounded-2xl shadow-md overflow-hidden w-full">
         <Calendar
           onDayPress={day => setSelected(day.dateString)}
           markedDates={{
