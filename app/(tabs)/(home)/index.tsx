@@ -88,7 +88,7 @@ export default function Home() {
   return (
     <SafeAreaView style={{ flex: 1 }} >
       <ScrollView className=" bg-background px-7 py-10 pb-56" contentContainerStyle={{ paddingBottom: 50 }}>
-        <View className="mb-6">
+        <View className="my-10">
           <Text className="text-3xl font-exo font-semibold text-accent file:mt-20">Project Reboot</Text>
           <Text className="text-sm font-exo font-semibold text-accent"> {currentDate.toDateString()}</Text>
         </View>
