@@ -1,39 +1,60 @@
-import { useState } from "react";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useEffect, useState } from "react";
 import { View } from "react-native";
 import { Calendar } from 'react-native-calendars';
 
 export default function Kalendaryo() {
   const [selected, setSelected] = useState('');
+  const [markedDates, setMarkedDates] = useState({})
 
+  useEffect(() => {
+    async function loadCompletedDays() {
+      try {
+        const jsonValue = await AsyncStorage.getItem('@completedDays');
+        const completedDays = jsonValue ? JSON.parse(jsonValue) : {};
+
+        const marks = Object.fromEntries(
+          Object.keys(completedDays).map(date => [date, {marked:true, dotColor: 'green'}])
+        );
+        setMarkedDates(marks)
+      }
+      catch (e) {
+        console.error("Error in loading completed days: ", e)
+      }
+    }
+    loadCompletedDays();
+
+  }, []);
+
+  // For clearing storage *dev mode
+  // function clearAsyncStorage(){
+  //   AsyncStorage.clear();
+  // }
   return (
     <View className="flex-1 items-center justify-center bg-background px-5">
       <View className="rounded-2xl shadow-md overflow-hidden w-full">
         <Calendar
           onDayPress={day => setSelected(day.dateString)}
-          markedDates={{
-            [selected]: {
-              selected: true,
-              selectedColor: '#212529',
-              disableTouchEvent: true,
-            },
-          }}
+          markedDates={markedDates}
           theme={{
             backgroundColor: '#f8f9fa',
             calendarBackground: '#f8f9fa',
             textSectionTitleColor: '#4b5563',
             selectedDayBackgroundColor: '#212529',
             selectedDayTextColor: '#f8f9fa',
-            todayTextColor: '#ef4444', 
+            todayTextColor: '#ba181b',
             dayTextColor: '#111827',
             arrowColor: '#212529',
-            textDayFontFamily: 'System',
-            textMonthFontFamily: 'System',
-            textDayHeaderFontFamily: 'System',
+            textDayFontFamily: 'Exo2-Regular',
+            textMonthFontFamily: 'Exo2-SemiBold',
+            textDayHeaderFontFamily: 'Exo2-Italic',
             textDayFontSize: 16,
             textMonthFontSize: 18,
             textDayHeaderFontSize: 14,
           }}
         />
+        <View>
+        </View>
       </View>
     </View>
   );
