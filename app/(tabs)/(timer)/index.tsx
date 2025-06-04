@@ -69,34 +69,35 @@ export default function Timer() {
         intervalRef.current = 0
     }
     return (
-        <View className="flex-1 justify-center items-center">
-
+        <View className="flex-1 justify-center items-center bg-background ">
+            {/* Buttons */}
             <View className="flex flex-row gap-x-2">
                 {Object.keys(TASKS).map((task) => (
-                    <TouchableOpacity className={`px-4 py-2 rounded-md ${active === task ? 'border-muted border-2' : 'bg-surface'}`} key={task} onPress={() => handleTaskChange(task)}>
-                        <Text className={`font-exo ${active === task ? 'text-background' : 'text-white'}`}>{task}</Text>
+                    <TouchableOpacity className={`px-3 py-2 rounded-md ${active === task ? 'border-muted border-2' : 'bg-surface'}`} key={task} onPress={() => handleTaskChange(task)}>
+                        <Text className={`font-exo ${active === task ? 'text-muted' : 'text-white'}`}>{task}</Text>
                     </TouchableOpacity>
                 ))}
             </View>
-            <Text className="font-exo font-semibold text-2xl text-center mt-10">{selectedTask}</Text>
+            <Text className="font-exo font-semibold text-2xl text-center mt-10 text-white">{selectedTask}</Text>
 
+            {/* Timer */}
             <View className=" flex mt-5">
-                <View className="container bg-background rounded-md w-80 flex justify-center items-center shadow-black shadow-md">
+                <View className="container bg-surface rounded-md w-80 flex justify-center items-center shadow-black shadow-md">
                     <View className=" rounded-md bg-muted py-10 w-72 mt-3">
                         <Text className="font-exo text-5xl text-center">{formatTime(seconds)}</Text>
                     </View>
-                    <View className=" py-5 space-x-2 flex-row items-center justify-center w-72">
-                        <View className="flex-1  bg-surface p-2 rounded-lg">
+                    <View className=" py-5 gap-x-2 flex-row items-center justify-center w-72">
+                        <View className="flex-1  bg-muted p-2 rounded-lg">
                             <TouchableOpacity onPress={handleStart}>
                                 <Text className="font-exo text-center text-white ">Start</Text>
                             </TouchableOpacity>
                         </View>
-                        <View className="flex-1 bg-surface p-2 rounded-lg">
+                        <View className="flex-1 bg-muted p-2 rounded-lg">
                             <TouchableOpacity onPress={handleStop}>
                                 <Text className="font-exo text-center text-white">Stop</Text>
                             </TouchableOpacity>
                         </View>
-                        <View className="flex-1 bg-surface p-2 rounded-lg">
+                        <View className="flex-1 bg-muted p-2 rounded-lg">
                             <TouchableOpacity onPress={handleReset}>
                                 <Text className="font-exo text-center text-white">Reset</Text>
                             </TouchableOpacity>
