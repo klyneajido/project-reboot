@@ -9,7 +9,7 @@ export default function PMTodoItem({task,PMToggleCompleted}){
                 onValueChange={() => PMToggleCompleted(task.id)}
                 className="mr-3"
             />
-            <Text className="font-exo" style={{textDecorationLine: task.completed ? 'line-through' : 'none'}}>
+            <Text className="font-exo flex-shrink text-wrap" style={{textDecorationLine: task.completed ? 'line-through' : 'none'}}>
                 {task.text}
             </Text>
         </View>
