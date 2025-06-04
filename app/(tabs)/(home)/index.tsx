@@ -53,14 +53,29 @@ export default function Home() {
     return () => clearInterval(interval)
   }, []);
 
-  useEffect(()=>{
-    if(tasks.length === 0) return;
-    const allCompleted = tasks.every(task => task.completed);
-    if(allCompleted){
-      const today = new Date().toISOString().slice(0,10);
-      saveDayCompleted(today);
-    }
-  },[tasks]);
+  useEffect(() => {
+    if (tasks.length === 0) return;
+    const updateCompletedDays = async () => {
+      const today = new Date().toISOString().slice(0, 10);
+      const allCompleted = tasks.every(task => task.completed);
+      try {
+        const jsonValue = await AsyncStorage.getItem("@completedDays");
+        const completedDays = jsonValue ? JSON.parse(jsonValue) : {};
+
+        if (allCompleted) {
+          completedDays[today] = true;
+
+        } else {
+          delete completedDays[today];
+        }
+        await AsyncStorage.setItem('@completedDays', JSON.stringify(completedDays))
+      }
+      catch (e) {
+        console.log('error updating completed day: ', e);
+      }
+    };
+    updateCompletedDays();
+  }, [tasks]);
 
   function toggleCompleted(id: number) {
     setTasks((tasks) =>
