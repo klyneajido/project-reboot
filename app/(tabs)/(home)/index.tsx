@@ -88,15 +88,13 @@ export default function Home() {
     const updateCompletedDays = async () => {
       const today = new Date().toISOString().slice(0, 10);
       const allCompleted = tasks.every(task => task.completed);
+      const completedCount = tasks.filter(task => task.completed).length;
+      const percentage = completedCount / (defaultTasks.length)
+
       try {
         const jsonValue = await AsyncStorage.getItem("@completedDays");
         const completedDays = jsonValue ? JSON.parse(jsonValue) : {};
-
-        if (allCompleted) {
-          completedDays[today] = true;
-        } else {
-          delete completedDays[today];
-        }
+        completedDays[today] = percentage;
 
         await AsyncStorage.setItem('@completedDays', JSON.stringify(completedDays));
       } catch (e) {

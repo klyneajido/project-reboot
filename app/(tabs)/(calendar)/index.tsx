@@ -4,6 +4,7 @@ import { useCallback, useState } from "react";
 import { View } from "react-native";
 import { Calendar } from 'react-native-calendars';
 
+
 export default function Kalendaryo() {
   const [selected, setSelected] = useState('');
   const [markedDates, setMarkedDates] = useState({})
@@ -14,8 +15,27 @@ export default function Kalendaryo() {
       const jsonValue = await AsyncStorage.getItem('@completedDays');
       const completedDays = jsonValue ? JSON.parse(jsonValue) : {};
 
+      const getColor = (percent: number) => {
+        if (percent === 1) return 'green';
+        if (percent >= 0.5) return 'yellow';
+        if (percent > 0) return 'orange';
+        return 'red';
+      }
+
+
+
       const marks = Object.fromEntries(
-        Object.keys(completedDays).map(date => [date, { marked: true, dotColor: 'green' }])
+
+        Object.entries(completedDays).map(([date, percent]) => {
+          const newPercent = Number(percent);
+          console.log(getColor(newPercent))
+          return [date,
+            {
+              marked: true,
+              dotColor: getColor(newPercent),
+            }
+          ]
+        })
       );
       setMarkedDates(marks);
     } catch (e) {
