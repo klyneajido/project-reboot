@@ -1,13 +1,13 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useState } from "react";
-import { SafeAreaView, ScrollView, Text, View } from "react-native";
+import { SafeAreaView, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
 import TodoItem from "./TodoItem";
 
 type Task = {
   id: number;
   text: string;
   completed: boolean;
-  category: "am" | "pm" | "general";
+  category: "am" | "pm" | "general" | "additional";
 }
 
 const defaultTasks: Task[] = [
@@ -26,14 +26,33 @@ const defaultTasks: Task[] = [
   { id: 13, text: "Sleep by 12:00 PM", completed: false, category: "pm" }
 ];
 
+
+
 export default function Home() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [currentDate, setCurrentDate] = useState(new Date());
+  const [input, setInput] = useState("");
+
+  const addItem = () => {
+    if (input !== "") {
+      const newTask: Task = {
+        id: Date.now(),
+        text: input,
+        completed: false,
+        category: "additional"
+      };
+      const updatedTasks = tasks.concat(newTask);
+      setTasks(updatedTasks);
+      saveTasks(updatedTasks);
+      setInput("");
+    }
+  };
 
   const categories: { key: string; title: string }[] = [
     { key: "general", title: "General Tasks" },
     { key: "am", title: "AM Tasks" },
     { key: "pm", title: "PM Tasks" },
+    { key: "additional", title: "Additional Tasks" },
   ];
 
   const saveTasks = async (tasks: Task[]) => {
@@ -56,7 +75,7 @@ export default function Home() {
   };
 
   const initializeTasks = async () => {
-    const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+    const today = new Date().toISOString().slice(0, 10);
     const lastOpened = await AsyncStorage.getItem('@lastOpenedDate');
 
     if (lastOpened !== today) {
@@ -87,7 +106,7 @@ export default function Home() {
 
     const updateCompletedDays = async () => {
       const today = new Date().toISOString().slice(0, 10);
-      const allCompleted = tasks.every(task => task.completed);
+      // const allCompleted = tasks.every(task => task.completed);
       const completedCount = tasks.filter(task => task.completed).length;
       const percentage = completedCount / (defaultTasks.length)
 
@@ -114,11 +133,11 @@ export default function Home() {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <ScrollView className="bg-background px-7 py-10 pb-56" contentContainerStyle={{ paddingBottom: 50 }}>
+    <SafeAreaView className='flex-1 bg-background'>
+      <ScrollView className="py-10 pb-56 bg-background px-7" contentContainerStyle={{ paddingBottom: 50 }}>
         <View className="my-10">
-          <Text className="text-3xl font-exo font-semibold text-accent mt-4">Project Reboot</Text>
-          <Text className="text-sm font-exo font-semibold text-accent">{currentDate.toDateString()}</Text>
+          <Text className="mt-4 text-3xl font-semibold font-exo text-accent">Project Reboot</Text>
+          <Text className="text-sm font-semibold font-exo text-accent">{currentDate.toDateString()}</Text>
         </View>
 
         {categories.map(({ key, title }) => {
@@ -132,14 +151,30 @@ export default function Home() {
           );
         })}
       </ScrollView>
+      {/* Input */}
+      <View className='flex-row items-center justify-center gap-3 p-4 mx-4 shadow-sm bg-background '>
+      <TextInput
+        placeholder='Add a new task'
+        value={input}
+        onChangeText={setInput}
+        className='flex-1 px-4 py-3 text-base bg-white border border-gray-300 rounded-lg focus:border-gray-500'
+        placeholderTextColor='#9ca3af'
+      />
+      <TouchableOpacity 
+        onPress={addItem}
+        className='px-5 py-3 bg-gray-600 rounded-lg active:bg-gray-700'
+      >
+        <Text className='text-base font-medium text-white'>Add</Text>
+      </TouchableOpacity>
+    </View>
     </SafeAreaView>
   );
 }
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <View className="mb-6 rounded-xl bg-surface px-4 py-3">
-      <Text className="text-accent font-semibold text-lg font-exo uppercase mb-3">{title}</Text>
+    <View className="px-4 py-3 mb-6 rounded-xl bg-surface">
+      <Text className="mb-3 text-lg font-semibold uppercase text-accent font-exo">{title}</Text>
       <View className="space-y-2">
         {children}
       </View>
